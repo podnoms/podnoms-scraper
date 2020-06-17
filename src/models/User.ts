@@ -31,7 +31,7 @@ export interface AuthToken {
 }
 
 const userSchema = new mongoose.Schema({
-    email: { type: String, unique: true },
+    email: { type: String, unique: true, },
     password: String,
     passwordResetToken: String,
     passwordResetExpires: Date,
@@ -46,9 +46,9 @@ const userSchema = new mongoose.Schema({
         gender: String,
         location: String,
         website: String,
-        picture: String
-    }
-}, { timestamps: true });
+        picture: String,
+    },
+}, { timestamps: true, });
 
 /**
  * Password hash middleware.

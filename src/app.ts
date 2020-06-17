@@ -17,6 +17,7 @@ const MongoStore = mongo(session);
 import * as homeController from './controllers/home';
 import * as userController from './controllers/user';
 import * as parserController from './controllers/parser';
+import * as requestsController from './controllers/requests';
 import * as apiController from './controllers/api';
 import * as contactController from './controllers/contact';
 
@@ -87,6 +88,7 @@ app.use(
  */
 app.get('/', homeController.index);
 app.post('/check-url', parserController.parseUrl);
+app.get('/requests', requestsController.index);
 app.get('/login', userController.getLogin);
 app.post('/login', userController.postLogin);
 app.get('/logout', userController.logout);

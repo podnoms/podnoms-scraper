@@ -1,0 +1,30 @@
+extends layout
+
+block content
+    h1 Here are the recent requests
+
+    table.table.table-sm.table-striped
+        thead
+            tr
+                th(scope='col') #
+                th(scope='col') FromIP
+                th(scope='col') URL
+                th(scope='col') Date
+                th(scope='col') Result
+                th(scope='col') View Result
+        tbody
+            each val, index in model
+                tr
+                    th(scope='row')
+                    td= val.sourceIp
+                    td= val.urlRequested
+                    td= val.dateRequested
+                    td= val.result
+                    td
+                        script.
+                            var showResults = function(results) {
+                                console.log('Results', results)
+                            }
+
+                        button.btn.btn-block.btn-facebook.btn-social(onclick='showResults(' + val.result + ')') Click                        
+
