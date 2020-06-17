@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { check, sanitize, validationResult } from 'express-validator';
-import { checkUrl } from 'src/services/urlChecker';
+import { checkUrl } from '../services/urlChecker';
 export const parseUrl = async (
     req: Request,
     res: Response,

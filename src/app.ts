@@ -16,6 +16,7 @@ const MongoStore = mongo(session);
 // Controllers (route handlers)
 import * as homeController from "./controllers/home";
 import * as userController from "./controllers/user";
+import * as parserController from "./controllers/parser";
 import * as apiController from "./controllers/api";
 import * as contactController from "./controllers/contact";
 
