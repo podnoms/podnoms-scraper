@@ -1,4 +1,5 @@
 import { resolve } from 'url';
+import logger from '../util/logger';
 
 const rp = require('request-promise');
 const cheerio = require('cheerio');
@@ -58,14 +59,14 @@ class RemotePageParser {
     }
 
     initialise(): Promise<boolean> {
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
             rp(this.url)
                 .then((html: any) => {
                     this.$ = cheerio.load(html);
                     resolve(true);
                 })
                 .catch((error: any) => {
-                    console.error(error);
+                    logger.error(error);
                     resolve(false);
                 });
         });
@@ -76,8 +77,7 @@ class RemotePageParser {
     }
 
     parsePage(): Promise<string[]> {
-        return new Promise(resolve => {
-            console.log('Starting the process');
+        return new Promise((resolve) => {
 
             var candidateLinks: string[] = [];
             const tags = this._getLinkTagLinks(this.$);
@@ -97,7 +97,6 @@ class RemotePageParser {
             candidateLinks = candidateLinks.filter(
                 (item, index) => candidateLinks.indexOf(item) === index
             );
-            console.log('Page parsed successfully');
             resolve(candidateLinks);
         });
     }

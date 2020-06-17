@@ -1,4 +1,5 @@
 import { validUrlList } from '../data';
+import logger from '../util/logger';
 
 function matchInArray(string: string, expressions: string[]) {
     var len = expressions.length,
@@ -11,7 +12,7 @@ function matchInArray(string: string, expressions: string[]) {
                 return true;
             }
         } catch (e) {
-            console.error('Error applying regex', expressions[i], e);
+            logger.error('Error applying regex', expressions[i], e);
         }
     }
     return false;
