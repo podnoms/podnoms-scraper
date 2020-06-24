@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from 'express';
-import { check, sanitize, validationResult } from 'express-validator';
 import { checkUrl } from '../services/urlChecker';
 import logger from '../util/logger';
 import { PageRequest } from '../models/PageRequest';
