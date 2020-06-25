@@ -1,6 +1,6 @@
 import passport from 'passport';
 import passportLocal from 'passport-local';
-import passportFacebook from 'passport-facebook';
+// import passportFacebook from 'passport-facebook';
 import _ from 'lodash';
 
 // import { User, UserType } from '../models/User';
@@ -8,7 +8,8 @@ import { User, UserDocument } from '../models/User';
 import { Request, Response, NextFunction } from 'express';
 
 const LocalStrategy = passportLocal.Strategy;
-const FacebookStrategy = passportFacebook.Strategy;
+
+// const FacebookStrategy = passportFacebook.Strategy;
 
 passport.serializeUser<any, any>((user, done) => {
     done(undefined, user.id);
@@ -60,6 +61,7 @@ passport.use(new LocalStrategy({ usernameField: 'email', }, (email, password, do
 /**
  * Sign in with Facebook.
  */
+/*
 passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_ID,
     clientSecret: process.env.FACEBOOK_SECRET,
@@ -116,7 +118,7 @@ passport.use(new FacebookStrategy({
         });
     }
 }));
-
+*/
 /**
  * Login Required middleware.
  */
