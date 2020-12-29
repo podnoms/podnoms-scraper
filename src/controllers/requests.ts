@@ -6,9 +6,6 @@ import logger from '../util/logger';
  * Home page.
  */
 export const index = (req: Request, res: Response) => {
-    if (!req.isAuthenticated()) {
-        return res.redirect('/');
-    }
     var recentRequests = PageRequest.find()
         .sort({ dateRequested: -1, })
         .limit(250)

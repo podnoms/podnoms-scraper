@@ -30,7 +30,7 @@ const _logParse = (req: Request, payload: string[]) => {
 
 export const deepParseUrl = (req: Request, res: Response) => {
     const url = req.query.url.toString();
-    logger.debug(`Parsing url: ${url}`);
+    logger.debug(`Deep parsing url: ${url}`);
     (async () => {
         const result = await deepParsePage(url);
         const status = 'Success';
@@ -41,9 +41,9 @@ export const deepParseUrl = (req: Request, res: Response) => {
         _logParse(req, result.map((r: any) => r.url));
     })();
 };
-export const parseUrl = (req: Request, res: Response) => {
+export const shallowParseUrl = (req: Request, res: Response) => {
     const url = req.query.url.toString();
-    logger.debug(`Parsing url: ${url}`);
+    logger.debug(`Shallow parsing url: ${url}`);
     (async () => {
         const result = await shallowParsePage(url);
         const status = 'Success';

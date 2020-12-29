@@ -6,8 +6,8 @@ FROM base as build
 RUN apk add --no-cache --virtual /tmp/.gyp \
     python \
     make \
-    g++ \
-    && npm config set scripts-prepend-node-path true \
+    g++ 
+RUN npm config set scripts-prepend-node-path true \
     && yarn install --frozen-lockfile \
     && apk del /tmp/.gyp
 COPY . .
