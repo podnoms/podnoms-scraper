@@ -35,7 +35,7 @@ export const getHeadMetaTags = (req: Request, res: Response) => {
         const result = await parseMetaTags(url);
         const status = 'Success';
         res.send({
-            title: status,
+            result: status,
             data: result
         });
         _logParse(req, result);
@@ -49,8 +49,8 @@ export const getPageTitle = (req: Request, res: Response) => {
         const result = await parsePageTitle(url);
         const status = 'Success';
         res.send({
-            title: status,
-            data: result
+            result: status,
+            data: [result]
         });
         _logParse(req, result);
     })();
@@ -63,7 +63,7 @@ export const deepParseUrl = (req: Request, res: Response) => {
         const result = await deepParsePage(url);
         const status = 'Success';
         res.send({
-            title: status,
+            result: status,
             data: result
         });
         _logParse(req, result.map((r: any) => r.url));
@@ -76,7 +76,7 @@ export const shallowParseUrl = (req: Request, res: Response) => {
         const result = await shallowParsePage(url);
         const status = 'Success';
         res.send({
-            title: status,
+            result: status,
             data: result
         });
         _logParse(req, result.map((r: any) => r.url));

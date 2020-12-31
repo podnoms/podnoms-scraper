@@ -19,5 +19,9 @@ const server = app.listen(app.get('port'), '0.0.0.0', () => {
     console.log('Press CTRL-C to stop\n');
 });
 
+process.on('uncaughtException', function(err) {
+    console.error(`Uncaught error ${err}`);
+    console.log(err.stack);
+});
 export default server;
 module.exports = server;
