@@ -57,6 +57,8 @@ app.use(
 );
 
 app.get('/check-url', parserController.deepParseUrl);
+app.get('/get-head-meta-tags', parserController.getHeadMetaTags);
+app.get('/get-page-title', parserController.getPageTitle);
 app.get('/shallow-check-url', parserController.shallowParseUrl);
 app.get('/deep-check-url', parserController.deepParseUrl);
 

@@ -1,12 +1,13 @@
 FROM node:current-alpine3.10 AS base
-WORKDIR /usr/src/app
+WORKDIR /app
 COPY package.json yarn.lock ./
 
 FROM base as build
 RUN apk add --no-cache --virtual /tmp/.gyp \
     python \
     make \
-    g++ 
+    g++
+
 RUN npm config set scripts-prepend-node-path true \
     && yarn install --frozen-lockfile \
     && apk del /tmp/.gyp
@@ -17,7 +18,10 @@ FROM base as release
 
 RUN npm config set scripts-prepend-node-path true
 RUN yarn install --production
-COPY --from=build /usr/src/app/dist /usr/src/app/dist
-COPY --from=build /usr/src/app/views /usr/src/app/views
+COPY --from=build /app/dist /app/dist
+COPY --from=build /app/views /app/views
+
 EXPOSE  3000
+RUN apk add --no-cache chromium
+
 CMD yarn start

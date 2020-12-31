@@ -1,3 +1,5 @@
+import logger from '../util/logger';
+
 const cheerio = require('cheerio');
 const axios = require('axios').default;
 
@@ -66,8 +68,13 @@ const _findLinksInHtml = (url: string, html: string) => {
 
 const _renderPageFromUrl = async (url: string) => {
     try {
+        const browserExe = process.env.CHROMIUM_BINARY || '/usr/bin/google-chrome-beta';
         const puppeteer = require('puppeteer');
-        const browser = await puppeteer.launch({ headless: true });
+        const browser = await puppeteer.launch({
+            executablePath: browserExe,
+            args: ['--no-sandbox'],
+            headless: true
+        });
         const page = await browser.newPage();
         await page.setDefaultNavigationTimeout(0);
 
@@ -76,12 +83,38 @@ const _renderPageFromUrl = async (url: string) => {
         const result = await page.content();
         await browser.close();
         return result;
-    } catch {
+    } catch (err) {
+        logger.error(`Error rendering page: ${err}`);
         return '';
     }
 };
 
+export const parseMetaTags = async (url: string) => {
+    logger.debug(`Getting page title ${url}`);
+    let response = await axios.get(url);
+    if (response.status === 200) {
+        const $ = cheerio.load(response.data);
+        const meta = $('meta');
+        const keys = Object.keys(meta);
+        let values = keys
+            .filter((k) => meta[k] && meta[k].attribs && meta[k].attribs.content)
+            .map((k) => meta[k].attribs.content);
+        return values;
+    }
+};
+
+export const parsePageTitle = async (url: string) => {
+    logger.debug(`Getting page title ${url}`);
+    let response = await axios.get(url);
+    if (response.status === 200) {
+        const $ = cheerio.load(response.data);
+        const title = $('title').text();
+
+        return title;
+    }
+};
 export const deepParsePage = async (url: string) => {
+    logger.debug(`Rendering page ${url}`);
     const html = await _renderPageFromUrl(url);
     if (!html) {
         return [];
