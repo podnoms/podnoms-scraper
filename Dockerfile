@@ -1,6 +1,6 @@
 FROM node:current-alpine3.10 AS base
 WORKDIR /app
-COPY package.json yarn.lock ./
+COPY package.json ./
 
 FROM base as build
 RUN apk add --no-cache --virtual /tmp/.gyp \
