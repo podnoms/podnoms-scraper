@@ -10,7 +10,7 @@ const LocalStrategy = passportLocal.Strategy;
 const FacebookStrategy = passportFacebook.Strategy;
 
 passport.serializeUser<any, any>((user, done) => {
-    done(undefined, user.id);
+    // done(undefined, user.id);
 });
 
 passport.deserializeUser((id, done) => {
