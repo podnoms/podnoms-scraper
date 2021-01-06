@@ -11,7 +11,8 @@ import bluebird from 'bluebird';
 import { MONGODB_URI, SESSION_SECRET } from './util/secrets';
 
 import * as parserController from './controllers/parser';
-
+import * as homeController from './controllers/home';
+import * as userController from './controllers/user';
 
 const MongoStore = mongo(session);
 
@@ -56,6 +57,9 @@ app.use(
     express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 })
 );
 
+app.get('/', homeController.index);
+app.get('/login', userController.getLogin);
+app.post('/login', userController.postLogin);
 app.get('/check-url', parserController.deepParseUrl);
 app.get('/get-head-meta-tags', parserController.getHeadMetaTags);
 app.get('/get-page-title', parserController.getPageTitle);
