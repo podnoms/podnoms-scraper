@@ -105,12 +105,18 @@ export const parseMetaTags = async (url: string) => {
 
 export const parsePageTitle = async (url: string) => {
     logger.debug(`Getting page title ${url}`);
-    let response = await axios.get(url);
-    if (response.status === 200) {
-        const $ = cheerio.load(response.data);
-        const title = $('title').text();
+    try {
+        let response = await axios.get(url);
 
-        return title;
+        logger.debug(`We have a response ${url}`);
+        if (response.status === 200) {
+            const $ = cheerio.load(response.data);
+            const title = $('title').text();
+
+            return title;
+        }
+    } catch (err) {
+        throw(err);
     }
 };
 export const deepParsePage = async (url: string) => {

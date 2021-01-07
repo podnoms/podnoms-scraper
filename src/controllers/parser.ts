@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import logger from '../util/logger';
 import { PageRequest } from '../models/PageRequest';
 import { shallowParsePage, deepParsePage, parsePageTitle, parseMetaTags } from '../services/pageParser';
@@ -42,17 +42,21 @@ export const getHeadMetaTags = (req: Request, res: Response) => {
     })();
 };
 
-export const getPageTitle = (req: Request, res: Response) => {
+export const getPageTitle = (req: Request, res: Response, next: NextFunction) => {
     const url = req.query.url.toString();
     logger.debug(`Deep parsing url: ${url}`);
     (async () => {
-        const result = await parsePageTitle(url);
-        const status = 'Success';
-        res.send({
-            result: status,
-            data: [result]
-        });
-        _logParse(req, result);
+        try {
+            const result = await parsePageTitle(url);
+            const status = 'Success';
+            res.send({
+                result: status,
+                data: [result]
+            });
+            _logParse(req, result);
+        } catch (err) {
+            next(err);
+        }
     })();
 };
 
