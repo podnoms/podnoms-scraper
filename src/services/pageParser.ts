@@ -63,7 +63,13 @@ const _findLinksInHtml = (url: string, html: string) => {
     candidateLinks = candidateLinks.filter(
         (item, index) => candidateLinks.indexOf(item) === index
     );
-    return candidateLinks;
+    const result = candidateLinks.map((url, index) => (
+        {
+            [url]: url.substring(url.lastIndexOf('/') + 1)
+        }
+    ));
+    //dedupe & convert array to object
+    return Object.assign({}, ...new Set(result));
 };
 
 const _renderPageFromUrl = async (url: string) => {
@@ -90,16 +96,26 @@ const _renderPageFromUrl = async (url: string) => {
 };
 
 export const parseMetaTags = async (url: string) => {
-    logger.debug(`Getting page title ${url}`);
+    logger.debug(`Getting page meta tags ${url}`);
     let response = await axios.get(url);
     if (response.status === 200) {
         const $ = cheerio.load(response.data);
         const meta = $('meta');
-        const keys = Object.keys(meta);
-        let values = keys
-            .filter((k) => meta[k] && meta[k].attribs && meta[k].attribs.content)
-            .map((k) => meta[k].attribs.content);
-        return values;
+        const values = meta
+            .filter(
+                (i: number, element: any) =>
+                    element &&
+                    element.attribs &&
+                    element.attribs.content &&
+                    (element.attribs.name || element.attribs.property)
+            )
+            .map((i: number, element: any) => (
+                {
+                    [element.attribs.name || element.attribs.property]: element.attribs.content
+                }
+            ));
+
+        return Object.assign({}, ...new Set(values));
     }
 };
 
@@ -111,9 +127,7 @@ export const parsePageTitle = async (url: string) => {
         logger.debug(`We have a response ${url}`);
         if (response.status === 200) {
             const $ = cheerio.load(response.data);
-            const title = $('title').text();
-
-            return title;
+            return $('title').text();
         }
     } catch (err) {
         throw(err);

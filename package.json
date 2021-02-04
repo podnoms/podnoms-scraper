@@ -1,6 +1,6 @@
 {
     "name": "podnoms-page-parser",
-    "version": "0.1.22",
+    "version": "0.1.24",
     "description": "A lightweight parser to take the stress off the main API server",
     "repository": {
         "type": "git",

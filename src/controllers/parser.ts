@@ -51,7 +51,9 @@ export const getPageTitle = (req: Request, res: Response, next: NextFunction) =>
             const status = 'Success';
             res.send({
                 result: status,
-                data: [result]
+                data: {
+                    title: result
+                }
             });
             _logParse(req, result);
         } catch (err) {
