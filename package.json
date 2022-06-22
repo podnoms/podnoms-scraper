@@ -32,7 +32,7 @@
         "@types/passport": "^1.0.5",
         "@types/passport-facebook": "^2.1.10",
         "@types/passport-local": "^1.0.33",
-        "async": "^3.1.0",
+        "async": "^3.2.2",
         "axios": "^0.21.1",
         "bcrypt-nodejs": "^0.0.3",
         "bluebird": "^3.5.5",
